@@ -123,6 +123,7 @@ The happy and sad path should be considered. An error should be raised in the ev
 -   title
 -   release_date
 -   rating
+-   cost
 -   classification
 
 The default order of the movies should be alphabetically by title.
