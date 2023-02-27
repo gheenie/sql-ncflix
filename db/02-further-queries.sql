@@ -40,8 +40,25 @@ movie_id_top_rated as (
     SELECT movie_id FROM top5
     ORDER BY COALESCE(rating,0) DESC
     LIMIT 1)
-SELECT COUNT(movie_id) FROM stock
-WHERE movie_id = (select movie_id from movie_id_top_rated);
+SELECT COUNT(movie_id), title FROM stock
+JOIN movies USING (movie_id)
+WHERE movie_id = (select movie_id from movie_id_top_rated)
+GROUP BY title;
+
+\echo 'OR, depending on how you interpret the question'
+
+ WITH top5_in_stock AS (SELECT DISTINCT(movie_id), rating, release_date FROM movies
+    JOIN stock USING (movie_id)
+    ORDER BY release_date DESC
+    LIMIT 5),
+    movie_id_top_rated as (
+        SELECT movie_id FROM top5_in_stock
+        ORDER BY COALESCE(rating,0) DESC
+        LIMIT 1)
+    SELECT COUNT(movie_id), title FROM stock
+    JOIN movies USING (movie_id)
+    WHERE movie_id = (select movie_id from movie_id_top_rated)
+    GROUP BY title;
 
 
 \echo '\n 5. These are the locations where our customers live which dont have stores:'
