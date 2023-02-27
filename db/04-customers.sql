@@ -15,8 +15,6 @@ FROM customers;
 
 \echo '\n 2. Here is a comprehensive output of the customers ordered by loyalty points, and grouped by area:'
 
-select * from customers;
-
 SELECT customer_name, AGE(date_of_birth), location, loyalty_points, 
     RANK() OVER (PARTITION BY location ORDER BY COALESCE(loyalty_points, 0) DESC) as ranking_within_location
 FROM customers;
