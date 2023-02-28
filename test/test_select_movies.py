@@ -1,5 +1,10 @@
 import pytest
 from src.select_movies import (select_movies)
+from config.connection import con
+
+
+def teardown_module():
+    con.close()
 
 
 def test_length_of_list_equals_number_of_rows():
@@ -73,3 +78,16 @@ def test_by_returns_movie_list_with_rating_greater_or_equal_than_min_rating():
     assert first_movie['title'] == 'A Fish Called Wanda'
     last_movie = movies[-1]
     assert last_movie['title'] == 'Toy Story'
+
+
+def test_prevent_injection_through_min_rating():
+    with pytest.raises(Exception) as e_info:
+        movies = select_movies(min_rating='6; SELECT * FROM movies ')
+    
+    assert e_info.value.args[0]['C'] == '22P02'
+
+
+def test_returns_movies_only_available_at_specified_location():
+    movies = select_movies(location='Leeds')
+
+    assert 
