@@ -1,5 +1,5 @@
 import pytest
-from src.select_movies import (select_movies)
+from src.select_movies import (select_movies, select_rentals)
 from config.connection import con
 
 
@@ -94,3 +94,21 @@ def test_returns_movies_only_available_at_specified_location():
 
     for movie in movies:
         assert movie['city'] == 'Leeds'
+
+
+@pytest.mark.select_rentals
+def test_select_rentals_returns_correct_columns():
+    expected = ['store_id', 'city', 'number_of_customers']
+
+    first_rental = select_rentals()[0]
+
+    assert list(first_rental.keys()) == expected
+
+
+@pytest.mark.select_rentals
+def test_select_rentals_returns_correct_number_of_rows():
+    expected = 2
+
+    rentals = select_rentals()
+
+    assert len(rentals) == expected
