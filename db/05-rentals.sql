@@ -54,13 +54,3 @@ LEFT JOIN stock USING (movie_id)
 LEFT JOIN stores USING (store_id)
 LEFT JOIN pop USING (movie_id)
 ORDER BY title;
-
-select * from rentals join customers using (customer_id) join stock using (stock_id) join stores using (store_id);
-
-SELECT store_id, city, COUNT(customer_id) as number_of_customers
-        FROM rentals
-        JOIN stock USING (stock_id)
-        JOIN stores USING (store_id)
-        JOIN customers USING (customer_id)
-        where location = city
-        GROUP BY store_id, city;
