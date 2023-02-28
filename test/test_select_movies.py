@@ -90,4 +90,7 @@ def test_prevent_injection_through_min_rating():
 def test_returns_movies_only_available_at_specified_location():
     movies = select_movies(location='Leeds')
 
-    assert 
+    assert len(movies) == 10
+
+    for movie in movies:
+        assert movie['city'] == 'Leeds'
