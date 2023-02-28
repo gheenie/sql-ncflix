@@ -1,4 +1,5 @@
 from config.connection import con
+from pg8000.native import literal
 
 
 def select_movies(order_by='title', order='ASC', min_rating=-1):
@@ -7,6 +8,8 @@ def select_movies(order_by='title', order='ASC', min_rating=-1):
 
     if order.upper() not in ['ASC', 'DESC']:
         raise Exception('Invalid sort order')
+
+    min_rating = literal(min_rating)
 
     query_str = f'SELECT * FROM movies WHERE COALESCE(rating,-1) >= {min_rating} ORDER BY {order_by} {order};'
     rows = con.run(query_str)
