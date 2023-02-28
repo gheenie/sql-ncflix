@@ -31,8 +31,8 @@ def select_movies(order_by='title', order='ASC', min_rating=-1, location=None):
 
     rows = con.run(query_str)
     columns = [meta['name'] for meta in con.columns]
-    movies = [
-        {column: row[i] for (i, column) in enumerate(columns)} 
+    movies = [{column: row[i] 
+        for (i, column) in enumerate(columns)} 
         for row in rows]
     
     return movies
