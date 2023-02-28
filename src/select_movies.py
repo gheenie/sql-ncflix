@@ -1,4 +1,9 @@
 import pg8000.native
+from config._env_development import (user, password)
+
+
+con = pg8000.native.Connection(
+    user, password=password, database='nc_flix')
 
 
 def select_movies(order_by='title', order='ASC', min_rating=-1):
@@ -7,9 +12,6 @@ def select_movies(order_by='title', order='ASC', min_rating=-1):
 
     if order.upper() not in ['ASC', 'DESC']:
         raise Exception('Invalid sort order')
-
-    con = pg8000.native.Connection(
-        'postgres', password='postgres', database='nc_flix')
 
     query_str = f'SELECT * FROM movies WHERE COALESCE(rating,-1) >= {min_rating} ORDER BY {order_by} {order};'
     rows = con.run(query_str)
