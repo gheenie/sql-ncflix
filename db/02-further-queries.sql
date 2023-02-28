@@ -22,7 +22,7 @@ WHERE
     (rating > (SELECT AVG(rating) FROM movies));
 
 
-\echo '\n 4. Here is the number of copies of the top rated film of the 5 most recently released films we have in stock across all stores:'
+\echo '\n 4. Here is the number of copies of the top rated film of the 5 most recently released films we have in stock:'
 
 -- SELECT COUNT(movie_id) FROM stock
 -- WHERE movie_id = 
